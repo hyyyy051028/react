@@ -1,11 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './23-购物车.jsx';
 import './index.css';
+import App from './01-antd的基本使用.jsx';
 
-createRoot(document.getElementById('root'), {
-  identifierPrefix: 'react-',
-}).render(
+createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
   </StrictMode>

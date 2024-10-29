@@ -50,4 +50,5 @@ function App() {
   );
 }
 export default App;
-//useEffect的请理操作
+
+//使用useEffectWvent可以实现在转换聊天室时不会再打印主题，而是在转换主题后刷新才会打印

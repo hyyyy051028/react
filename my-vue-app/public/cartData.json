@@ -1,0 +1,53 @@
+{
+  "errcode": 0,
+  "list": [
+    {
+      "id": 1,
+      "name": "西瓜",
+      "price": 5,
+      "number": 2
+    },
+    {
+      "id": 2,
+      "name": "苹果",
+      "price": 2,
+      "number": 1
+    },
+    {
+      "id": 3,
+      "name": "香蕉",
+      "price": 3,
+      "number": 5
+    },
+    {
+      "id": 4,
+      "name": "哈密瓜",
+      "price": 7,
+      "number": 1
+    },
+    {
+      "id": 5,
+      "name": "葡萄",
+      "price": 2,
+      "number": 3
+    },
+    {
+      "id": 6,
+      "name": "草莓",
+      "price": 10,
+      "number": 1
+    },
+    {
+      "id": 7,
+      "name": "火龙果",
+      "price": 1,
+      "number": 2
+    },
+    {
+      "id": 8,
+      "name": "梨",
+      "price": 5,
+      "number": 2
+    }
+  ]
+}

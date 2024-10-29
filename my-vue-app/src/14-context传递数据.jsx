@@ -19,7 +19,7 @@
 // }
 // export default App;
 import { createContext, useContext, useState } from 'react';
-const Context = createContext();
+const Context = createContext(0);
 function App() {
   const [count, setCount] = useState(123);
   const handleClick = () => {

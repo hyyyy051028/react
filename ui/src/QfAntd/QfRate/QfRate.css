@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1683785532839') format('truetype');
+}
+.qf-ant-rate {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.06);
+  font-size: 20px;
+  line-height: unset;
+  list-style: none;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+  display: inline-block;
+  outline: none;
+}
+.qf-ant-rate-star {
+  margin-inline-end: 8px;
+  font-family: "iconfont" !important;
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  cursor: pointer;
+}
+.qf-ant-rate-star::before {
+  content: "\f0144";
+}
+.qf-ant-rate-star-active {
+  color: #fadb14; 
+}

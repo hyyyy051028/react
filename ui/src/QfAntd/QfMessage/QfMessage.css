@@ -1,0 +1,31 @@
+
+.qf-ant-message {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  list-style: none;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+  position: fixed;
+  top: 8px;
+  width: 100%;
+  pointer-events: none;
+  z-index: 1010;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 8px;
+}
+.qf-ant-message-notice {
+  padding: 8px;
+  text-align: center;
+}
+.qf-ant-message-notice-content {
+  display: inline-block;
+  padding: 9px 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  pointer-events: all;
+}

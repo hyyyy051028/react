@@ -1,0 +1,8 @@
+.logo {
+  line-height: 32px;
+  color: white; /* 设置白色文字 */
+  background-color: #001529; /* 深色背景，确保可见 */
+  font-size: 18px;
+  margin: 10px;
+  text-align: center;
+}

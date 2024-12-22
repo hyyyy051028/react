@@ -36,11 +36,11 @@ export default function NewsSandBox() {
               element={<UserList />}
             />
             <Route
-              path="/user-manage/role/list"
+              path="/right-manage/role/list"
               element={<RoleList />}
             />
             <Route
-              path="/user-manage/right/list"
+              path="/right-manage/right/list"
               element={<RightList />}
             />
             <Route

@@ -11,17 +11,34 @@ import { Layout, Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
-
+import { connect } from 'react-redux';
 const { Sider } = Layout;
 
-const {
-  role: { rights },
-} = JSON.parse(localStorage.getItem('token'));
+const iconMapping = {
+  '/home': <UserOutlined />,
+  '/user-manage': <MailOutlined />,
+  '/right-manage': <AppstoreOutlined />,
+  '/news-manage': <FileTextOutlined />,
+  '/audit-manage': <FileSearchOutlined />,
+  '/publish-manage': <CalendarOutlined />,
+};
 
-function SideMenu() {
+function SideMenu(props) {
   const [menu, setMenu] = useState([]); // 用来保存菜单数据
-  const navigate = useNavigate(); // 使用 useNavigate 钩子
-  const location = useLocation(); // 使用 useLocation 获取当前路径
+  const [rights, setRights] = useState([]); // 用来保存权限数据
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // 从 localStorage 获取最新的 token 和权限信息
+  const updateRights = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const {
+        role: { rights },
+      } = JSON.parse(token);
+      setRights(rights); // 更新权限数据
+    }
+  };
 
   // 根据 pathname 动态设置选中的菜单项
   const selectKeys = [location.pathname];
@@ -29,22 +46,25 @@ function SideMenu() {
 
   // 检查当前用户是否有权限
   const checkPagePermission = (item) => {
-    return rights.includes(item.key); // 只显示有权限的菜单项
+    return item.pagepermisson && rights.includes(item.key); // 只显示有权限的菜单项
   };
+
+  useEffect(() => {
+    // 每次组件渲染时都更新权限数据
+    updateRights();
+  }, []); // 初次渲染时读取权限
 
   useEffect(() => {
     // 从 json-server 获取菜单数据
     axios
       .get('http://localhost:5000/rights?_embed=children')
       .then((res) => {
-        console.log(res.data); // 查看返回的数据
-
         // 格式化数据以适应 Menu 组件
         const formattedMenu = res.data
           .filter((item) => checkPagePermission(item)) // 过滤掉没有权限的菜单项
           .map((item) => ({
             key: item.key,
-            icon: getIcon(item.key), // 使用 getIcon 函数来映射 key 到 React 图标组件
+            icon: iconMapping[item.key] || null, // 使用 iconMapping 提供的图标
             label: item.title,
             children:
               item.children && item.children.length > 0
@@ -63,26 +83,6 @@ function SideMenu() {
       });
   }, [rights]); // 依赖 rights，确保权限变动时重新渲染菜单
 
-  // 根据 key 返回对应的图标组件
-  const getIcon = (key) => {
-    switch (key) {
-      case '/home':
-        return <UserOutlined />;
-      case '/user-manage':
-        return <MailOutlined />;
-      case '/right-manage':
-        return <AppstoreOutlined />;
-      case '/news-manage':
-        return <FileTextOutlined />;
-      case '/audit-manage':
-        return <FileSearchOutlined />;
-      case '/publish-manage':
-        return <CalendarOutlined />;
-      default:
-        return null;
-    }
-  };
-
   const onClick = (e) => {
     navigate(e.key); // 使用 navigate 进行页面跳转
   };
@@ -91,9 +91,16 @@ function SideMenu() {
     <Sider
       trigger={null}
       collapsible
-      collapsed={false}
+      collapsed={props.isCollapsed}
     >
-      <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          height: '100%',
+          flexDirection: 'column',
+          background: '#001529',
+        }}
+      >
         <div className="logo">全球新闻发布系统</div>
         <div style={{ flex: 1, overflow: 'auto' }}>
           <Menu
@@ -110,4 +117,8 @@ function SideMenu() {
   );
 }
 
-export default SideMenu;
+const mapStateToProps = ({ CollapsedReducer: { isCollapsed } }) => ({
+  isCollapsed,
+});
+
+export default connect(mapStateToProps)(SideMenu);

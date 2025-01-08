@@ -6,15 +6,14 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 const { Header } = Layout;
 
-function TopHeader() {
-  const [collapsed, setCollapsed] = useState(false);
+function TopHeader(props) {
   const navigate = useNavigate(); // 使用 useNavigate 获取 navigate 函数
 
   const changeCollapsed = () => {
-    setCollapsed(!collapsed);
+    props.changeCollapsed();
   };
   const {
     role: { roleName },
@@ -44,10 +43,11 @@ function TopHeader() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        background: 'white',
       }}
     >
       {/* 左侧折叠按钮 */}
-      {collapsed ? (
+      {props.isCollapsed ? (
         <MenuUnfoldOutlined
           onClick={changeCollapsed}
           aria-label="展开菜单"
@@ -75,4 +75,14 @@ function TopHeader() {
   );
 }
 
-export default TopHeader;
+const mapStateToProps = ({ CollapsedReducer: { isCollapsed } }) => {
+  return {
+    isCollapsed,
+  };
+};
+const mapDispatchToProps = {
+  changeCollapsed() {
+    return { type: 'change_collapsed' };
+  },
+};
+export default connect(mapStateToProps, mapDispatchToProps)(TopHeader);

@@ -29,7 +29,14 @@ export default function UserList() {
     3: 'editor',
   };
   useEffect(() => {
-    axios.get(' http://localhost:5000/users?_expand=role').then((res) => {
+    // 定义 roleObj 作为常量对象
+    const roleObj = {
+      1: 'superadmin',
+      2: 'admin',
+      3: 'editor',
+    };
+
+    axios.get('/users?_expand=role').then((res) => {
       const list = res.data;
       setdataSource(
         roleObj[roleId] === 'superadmin'
@@ -43,15 +50,16 @@ export default function UserList() {
             ]
       );
     });
-  }, [roleId, region, username, roleObj]);
+  }, [roleId, region, username]); // 只依赖 roleId, region 和 username
+
   useEffect(() => {
-    axios.get(' http://localhost:5000/regions').then((res) => {
+    axios.get('/regions').then((res) => {
       const list = res.data;
       setregionList(list);
     });
   }, []);
   useEffect(() => {
-    axios.get(' http://localhost:5000/roles').then((res) => {
+    axios.get('/roles').then((res) => {
       const list = res.data;
       setroleList(list);
     });
@@ -203,6 +211,7 @@ export default function UserList() {
         });
     }
   };
+
   const updateFormOk = () => {
     updateForm.current.validateFields().then((value) => {
       //

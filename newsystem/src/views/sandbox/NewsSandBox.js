@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
-import { Navigate, Route, Routes } from 'react-router-dom';
+
 import SideMenu from '../../components/sandbox/SideMenu';
 import TopHeader from '../../components/sandbox/TopHeader';
-import Home from './home/Home';
-import UserList from './user-manage/UserList';
-import RoleList from './right-manage/RoleList';
-import RightList from './right-manage/RightList';
-import Nopermission from './nopermission/Nopermission';
-import './NewsSandBox.css';
+import NewsRouter from '../../components/sandbox/NewsRouter';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
 const { Content } = Layout;
 
 export default function NewsSandBox() {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
+  useEffect(() => {
+    // 监听 localStorage 中 token 的变化
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem('token'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [token]);
+
+  nprogress.start();
+  useEffect(() => {
+    nprogress.done();
+  });
+
   return (
     <Layout>
       <SideMenu />
@@ -22,41 +38,11 @@ export default function NewsSandBox() {
           style={{
             margin: '24px 16px',
             padding: 24,
-            flex: 1,
+            overflow: 'auto',
             minHeight: 280,
           }}
         >
-          <Routes>
-            <Route
-              path="/home"
-              element={<Home />}
-            />
-            <Route
-              path="/user-manage/list"
-              element={<UserList />}
-            />
-            <Route
-              path="/right-manage/role/list"
-              element={<RoleList />}
-            />
-            <Route
-              path="/right-manage/right/list"
-              element={<RightList />}
-            />
-            <Route
-              path="/"
-              element={
-                <Navigate
-                  replace
-                  to="/home"
-                />
-              }
-            />
-            <Route
-              path="*"
-              element={<Nopermission />}
-            />
-          </Routes>
+          <NewsRouter />
         </Content>
       </Layout>
     </Layout>
